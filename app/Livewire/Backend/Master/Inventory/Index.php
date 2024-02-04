@@ -64,7 +64,7 @@ class Index extends Component {
                     return $btn;
                 })
                 ->rawColumns(['action', 'is_attribute'])
-                ->only(['id', 'nama', 'is_attribute', 'nm_posisi_kaca', 'nm_warna', 'nm_service', 'action'])
+                ->only(['id', 'nama', 'ukur_lebar', 'ukur_panjang', 'is_attribute', 'nm_posisi_kaca', 'nm_warna', 'nm_service', 'action'])
                 ->make(true);
         } else {
             return false;

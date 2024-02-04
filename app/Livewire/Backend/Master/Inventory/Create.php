@@ -25,6 +25,8 @@ class Create extends Component {
     public $input_posisi_kaca;
     public $input_warna;
     public $input_service;
+    public $input_ukur_l;
+    public $input_ukur_p;
 
     #[Rule('required')]
     public $input_nama;
@@ -65,6 +67,8 @@ class Create extends Component {
             $id_posisi_kaca = $this->input_posisi_kaca;
             $id_warna = $this->input_warna;
             $id_service = $this->input_service;
+            $input_ukur_l = $this->input_ukur_l;
+            $input_ukur_p = $this->input_ukur_p;
 
             if ($is_attribute == 0) {
                 $id_posisi_kaca = null;
@@ -78,6 +82,8 @@ class Create extends Component {
                 'id_posisi_kaca' => $id_posisi_kaca,
                 'id_warna' => $id_warna,
                 'id_service' => $id_service,
+                'ukur_lebar' => $input_ukur_l,
+                'ukur_panjang' => $input_ukur_p,
             ];
 
             if ($this->is_edit) {
@@ -121,6 +127,8 @@ class Create extends Component {
         $this->input_posisi_kaca = $data->id_posisi_kaca;
         $this->input_warna = $data->id_warna;
         $this->input_service = $data->id_service;
+        $this->input_ukur_l = $data->ukur_lebar;
+        $this->input_ukur_p = $data->ukur_panjang;
         return false;
     }
 

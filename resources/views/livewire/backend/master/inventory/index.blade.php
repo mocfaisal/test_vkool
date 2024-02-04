@@ -55,8 +55,7 @@
         // Function Declare
         async function initTableElem() {
             const field_table = $('#field_table');
-            const txt =
-                '<table id="tbl_list" class="table-striped table-hover table table" style="width: 100%;"> <thead> <tr> <th style="vertical-align: middle; text-align: center;" rowspan="2">No</th> <th style="vertical-align: middle; text-align: center;" rowspan="2">Nama</th> <th style="vertical-align: middle; text-align: center;" colspan="4">Atribut</th> <th style="vertical-align: middle; text-align: center;" rowspan="2">Aksi</th> </tr> <tr> <th style="vertical-align: middle; text-align: center;">Status</th> <th style="vertical-align: middle; text-align: center;">Posisi Kaca</th> <th style="vertical-align: middle; text-align: center;">Warna</th> <th style="vertical-align: middle; text-align: center;">Service</th> </tr> </thead> </table>';
+            const txt = '<table id="tbl_list" class="table-striped table-hover table table" style="width: 100%;"> <thead> <tr> <th style="vertical-align: middle; text-align: center;" rowspan="3">No</th> <th style="vertical-align: middle; text-align: center;" rowspan="3">Nama</th> <th style="vertical-align: middle; text-align: center;" colspan="6">Atribut</th> <th style="vertical-align: middle; text-align: center;" rowspan="3">Aksi</th> </tr> <tr> <th style="vertical-align: middle; text-align: center;" rowspan="2">Status</th> <th style="vertical-align: middle; text-align: center;" colspan="2">Ukuran</th> <th style="vertical-align: middle; text-align: center;" rowspan="2">Posisi Kaca</th> <th style="vertical-align: middle; text-align: center;" rowspan="2">Warna</th> <th style="vertical-align: middle; text-align: center;" rowspan="2">Service</th> </tr> <tr> <th style="vertical-align: middle; text-align: center;">Lebar (cm)</th> <th style="vertical-align: middle; text-align: center;">Panjang&nbsp;(cm)</th> </tr> </thead> </table>';
             field_table.html(txt);
             return true;
         }
@@ -91,6 +90,12 @@
                         data: 'is_attribute',
                     },
                     {
+                        data: 'ukur_lebar',
+                    },
+                    {
+                        data: 'ukur_panjang',
+                    },
+                    {
                         data: 'nm_posisi_kaca',
                     },
                     {
@@ -107,7 +112,7 @@
                 ],
                 columnDefs: [{
                     className: 'dt-center',
-                    targets: [0, 2, 6]
+                    targets: [0, 2, 8]
                 }],
                 order: [
                     [1, 'asc']
@@ -207,7 +212,21 @@
         document.addEventListener('livewire:navigated', () => {
             // console.log('livewire load code when navigated');
             // Listen to dispatch from server
+
+            var myModalEl = document.querySelector('#mdl_inventory')
+            var modal = bootstrap.Modal.getOrCreateInstance(myModalEl)
+
             Livewire.on('showResult', (response) => popResult(table, response));
+
+            Livewire.on('edit-mode', (res) => {
+                modal.show();
+
+                setTimeout(() => {
+                    $('#input_posisi_kaca').trigger('change');
+                    $('#input_warna').trigger('change');
+                    $('#input_service').trigger('change');
+                }, 500);
+            })
         });
 
         document.addEventListener('livewire:navigating', () => {

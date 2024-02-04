@@ -52,7 +52,42 @@
                                 </div>
                             </div>
 
+                            <hr>
+
                             <div id="field_attribute" wire:ignore {{ !$is_attribute ? 'hidden' : '' }}>
+
+                                <div class="row">
+                                    <label for="input_ukur_l">Ukuran</label>
+                                    <div class="col-md-6 col-6">
+                                        <div class="form-group">
+                                            <label for="input_ukur_l">Lebar (cm)</label>
+                                            <input type="number" class="form-control" placeholder="Lebar"
+                                            wire:model="input_ukur_l">
+                                            @error('input_ukur_l')
+                                                <div class="invalid-feedback">
+                                                    <i class="bx bx-radio-circle"></i>
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-6">
+                                        <div class="form-group">
+                                            <label for="input_ukur_p">Panjang (cm)</label>
+                                            <input type="number" class="form-control" placeholder="Panjang"
+                                            wire:model="input_ukur_p">
+                                            @error('input_ukur_p')
+                                                <div class="invalid-feedback">
+                                                    <i class="bx bx-radio-circle"></i>
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr>
+
                                 <div class="col-md-12 col-12" wire:ignore>
                                     <div class="form-group">
                                         <label for="input_posisi_kaca">Posisi Kaca</label>
