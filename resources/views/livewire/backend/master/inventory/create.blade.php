@@ -54,7 +54,7 @@
 
                             <hr>
 
-                            <div id="field_attribute" wire:ignore {{ !$is_attribute ? 'hidden' : '' }}>
+                            <div id="field_attribute" {{ !$is_attribute ? 'hidden' : '' }}>
 
                                 <div class="row">
                                     <label for="input_ukur_l">Ukuran</label>
@@ -62,7 +62,7 @@
                                         <div class="form-group">
                                             <label for="input_ukur_l">Lebar (cm)</label>
                                             <input type="number" class="form-control" placeholder="Lebar"
-                                            wire:model="input_ukur_l">
+                                                wire:model="input_ukur_l">
                                             @error('input_ukur_l')
                                                 <div class="invalid-feedback">
                                                     <i class="bx bx-radio-circle"></i>
@@ -75,7 +75,7 @@
                                         <div class="form-group">
                                             <label for="input_ukur_p">Panjang (cm)</label>
                                             <input type="number" class="form-control" placeholder="Panjang"
-                                            wire:model="input_ukur_p">
+                                                wire:model="input_ukur_p">
                                             @error('input_ukur_p')
                                                 <div class="invalid-feedback">
                                                     <i class="bx bx-radio-circle"></i>
@@ -199,19 +199,22 @@
                 });
             }
 
-            var is_checked_remider = {{ $is_attribute ? 'true' : 'false' }};
+            // var is_checked_attribute = {{ $is_attribute ? 'true' : 'false' }};
+
 
             $('#is_attribute').on('change', function() {
                 let is_checked = $(this).is(':checked');
 
-                if (is_checked) {
-                    $('#field_attribute').prop('hidden', false);
-                } else {
-                    $('#field_attribute').prop('hidden', true);
-                }
+                // if (is_checked) {
+                //     $('#field_attribute').prop('hidden', false);
+                // } else {
+                //     $('#field_attribute').prop('hidden', true);
+                // }
 
                 @this.set('is_attribute', is_checked);
             });
+
+            // $('#is_attribute').prop('checked', is_checked_attribute).trigger('change');
 
             // Initial plugins
             $('#input_posisi_kaca').select2({

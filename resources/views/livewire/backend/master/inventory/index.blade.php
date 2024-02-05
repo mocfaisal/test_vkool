@@ -184,7 +184,7 @@
             })
 
             @this.on('edit-mode', (res) => {
-                modal.show();
+                // modal.show();
 
                 setTimeout(() => {
                     $('#input_posisi_kaca').trigger('change');
@@ -219,7 +219,7 @@
             Livewire.on('showResult', (response) => popResult(table, response));
 
             Livewire.on('edit-mode', (res) => {
-                modal.show();
+                // modal.show();
 
                 setTimeout(() => {
                     $('#input_posisi_kaca').trigger('change');
@@ -227,6 +227,11 @@
                     $('#input_service').trigger('change');
                 }, 500);
             })
+
+            myModalEl.addEventListener('hidden.bs.modal', (event) => {
+                @this.dispatch('reset-modal');
+                $('#field_attribute').prop('hidden', true);
+            });
         });
 
         document.addEventListener('livewire:navigating', () => {

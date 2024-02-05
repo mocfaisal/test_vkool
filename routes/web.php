@@ -52,16 +52,6 @@ Route::group(['namespace' => 'App'], function () {
 
                 Route::prefix('master')->group(function () {
 
-                    Route::group(['namespace' => 'Wallet'], function () {
-                        Route::prefix('wallet')->group(function () {
-                            Route::get('/', Index::class)->name('backend.master.wallet');
-                            Route::get('/create', Create::class)->name('backend.master.wallet.create');
-                            // Route::get('/edit/{id}', Edit::class)->name('backend.master.wallet.edit');
-
-                            Route::post('/table', 'Index@getData')->name('backend.master.wallet.getData.table');
-                        });
-                    });
-
                     Route::group(['namespace' => 'Inventory'], function () {
                         Route::prefix('inventory')->group(function () {
                             Route::get('/', Index::class)->name('backend.master.inventory');
@@ -74,22 +64,21 @@ Route::group(['namespace' => 'App'], function () {
                 });
             });
 
-            Route::group(['namespace' => 'Mahasiswa'], function () {
+            Route::group(['namespace' => 'Transaksi'], function () {
 
-                Route::prefix('mahasiswa')->group(function () {
+                Route::prefix('transaksi')->group(function () {
 
-                    Route::group(['namespace' => 'Jadwal'], function () {
-                        Route::prefix('jadwal')->group(function () {
-                            Route::get('/', Index::class)->name('backend.mahasiswa.jadwal.index');
-                            // Route::get('/create', Create::class)->name('backend.mahasiswa.wallet.create');
-                            // Route::get('/edit/{id}', Edit::class)->name('backend.mahasiswa.wallet.edit');
+                    Route::group(['namespace' => 'Penjualan'], function () {
+                        Route::prefix('penjualan')->group(function () {
+                            Route::get('/', Index::class)->name('backend.transaksi.penjualan');
+                            Route::get('/create', Create::class)->name('backend.transaksi.penjualan.create');
+                            // Route::get('/edit/{id}', Edit::class)->name('backend.transaksi.penjualan.edit');
 
-                            // Route::post('/table', 'Index@getData')->name('backend.mahasiswa.wallet.getData.table');
+                            Route::post('/table', 'Index@getData')->name('backend.transaksi.penjualan.getData.table');
                         });
                     });
                 });
             });
-
         });
 
         Route::group(['namespace' => 'Frontend'], function () {
@@ -115,7 +104,6 @@ Route::group(['namespace' => 'App'], function () {
                     });
                 });
             });
-
         });
     });
 });

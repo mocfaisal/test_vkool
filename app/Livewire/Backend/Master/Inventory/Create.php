@@ -31,6 +31,7 @@ class Create extends Component {
     #[Rule('required')]
     public $input_nama;
     public $is_attribute = false;
+    public $is_attribute_field = false;
 
     public function __construct() {
         $this->current_user_id = Session::get('user_id');
@@ -74,6 +75,8 @@ class Create extends Component {
                 $id_posisi_kaca = null;
                 $id_warna = null;
                 $id_service = null;
+                $input_ukur_l = null;
+                $input_ukur_p = null;
             }
 
             $datasave = [
@@ -124,6 +127,9 @@ class Create extends Component {
         $this->id = $id;
         $this->input_nama = $data->nama;
         $this->is_attribute = ($data->is_attribute == 1 ? true : false);
+
+        $this->is_attribute_field = $this->is_attribute;
+
         $this->input_posisi_kaca = $data->id_posisi_kaca;
         $this->input_warna = $data->id_warna;
         $this->input_service = $data->id_service;

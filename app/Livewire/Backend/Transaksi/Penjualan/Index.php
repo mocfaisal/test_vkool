@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Backend\Master\Inventory;
+namespace App\Livewire\Backend\Transaksi\Penjualan;
 
 use Livewire\Component;
 use Illuminate\Http\Request;
@@ -9,6 +9,7 @@ use DataTables;
 use Livewire\Attributes\On;
 use DB;
 use App\Models\Table\m_inventory;
+use App\Models\Table\tr_penjualan;
 use App\Models\Utils\Salz_utils;
 
 class Index extends Component {
@@ -21,10 +22,9 @@ class Index extends Component {
     }
 
     public function render() {
-        return view('livewire.backend.master.inventory.index')
+        return view('livewire.backend.transaksi.penjualan.index')
             ->layout("layouts.backend.admin.mainLayout");
     }
-
     public function getData(Request $request) {
         $this->skipRender();
 
@@ -33,12 +33,13 @@ class Index extends Component {
             $curr_user_id = $this->current_user_id;
             $limit = $request->input('length');
 
-            $data = m_inventory::selectRaw('m_inventory.*, m_posisi_kaca.nama as nm_posisi_kaca, m_warna.nama as nm_warna, m_service.nama as nm_service')
+            $data = tr_penjualan::selectRaw('tr_penjualan.*, m_posisi_kaca.nama as nm_posisi_kaca, m_warna.nama as nm_warna, m_service.nama as nm_service')
+                // ->leftJoin('m_inventory', 'm_inventory.id', '=', 'id_inventory')
                 ->leftJoin('m_posisi_kaca', 'm_posisi_kaca.id', '=', 'id_posisi_kaca')
                 ->leftJoin('m_warna', 'm_warna.id', '=', 'id_warna')
                 ->leftJoin('m_service', 'm_service.id', '=', 'id_service')
-                ->where('m_inventory.created_by', $curr_user_id)
-                ->where('m_inventory.is_active', '1')
+                ->where('tr_penjualan.created_by', $curr_user_id)
+                // ->where('tr_penjualan.is_active', '1')
                 ->limit($limit)->get()->toArray();
 
             if (!empty($data)) {
@@ -59,7 +60,7 @@ class Index extends Component {
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '';
-                    $btn .= '<a href="javascript:void(0);" class="btn icon btn-primary" data-bs-tooltip="true" data-bs-title="Edit" data-bs-toggle="modal" data-bs-target="#mdl_inventory" wire:click="$dispatch(\'edit-mode\',{id: ' . $row['id'] . '})" ><i class="bi bi-pencil"></i></a>';
+                    // $btn .= '<a href="javascript:void(0);" class="btn icon btn-primary" data-bs-tooltip="true" data-bs-title="Edit" data-bs-toggle="modal" data-bs-target="#mdl_inventory" wire:click="$dispatch(\'edit-mode\',{id: ' . $row['id'] . '})" ><i class="bi bi-pencil"></i></a>';
                     $btn .= ' | <a href="javascript:void(0);" onclick="popDelete(' . $row['id'] . ')" class="btn icon btn-danger" data-bs-title="Delete"><i class="bi bi-x"></i></a>';
                     return $btn;
                 })
@@ -74,7 +75,7 @@ class Index extends Component {
     public function destroy($id) {
         $this->skipRender();
 
-        $delete = m_inventory::where('created_by', $this->current_user_id)->where('id', $id)->delete();
+        $delete = tr_penjualan::where('created_by', $this->current_user_id)->where('id', $id)->delete();
 
         if ($delete) {
             $r = ['success' => true, 'msg' => 'Data berhasil dihapus!'];

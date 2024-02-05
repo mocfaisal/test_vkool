@@ -1,5 +1,5 @@
-@section('app.title', 'Wallet')
-@section('content.header.title', 'Wallet')
+@section('app.title', 'Penjualan')
+@section('content.header.title', 'Penjualan')
 
 <div>
     {{-- Root div must be added --}}
@@ -7,11 +7,11 @@
     <div class="card">
         <div class="card-header">
             <div class="float-start">
-                <h4 class="card-title">Wallet</h4>
+                <h4 class="card-title">List Data</h4>
             </div>
             <div class="float-end">
                 <div class="buttons">
-                    <a class="btn icon icon-left btn-primary" data-bs-toggle="modal" data-bs-target="#mdl_wallet"><i
+                    <a class="btn icon icon-left btn-primary" data-bs-toggle="modal" data-bs-target="#mdl_inventory"><i
                             class="bi bi-plus"></i> Add Data</a>
                 </div>
             </div>
@@ -27,7 +27,7 @@
 
     </div>
 
-    <livewire:backend.master.wallet.create>
+    <livewire:backend.transaksi.penjualan.create>
 
 </div>
 
@@ -55,13 +55,13 @@
         // Function Declare
         async function initTableElem() {
             const field_table = $('#field_table');
-            const txt = '<table id="tbl_list" class="table-striped table-hover table table" style="width: 100%;"> <thead> <tr> <th style="vertical-align: middle; text-align: center;">No</th> <th style="vertical-align: middle; text-align: center;">Nama</th> <th style="vertical-align: middle; text-align: center;">Default</th> <th style="vertical-align: middle; text-align: center;">Nominal</th> <th style="vertical-align: middle; text-align: center;">Aksi</th> </tr> </thead> <tfoot> <tr> <th colspan="3">Total</th> <th colspan="1">&nbsp;</th> <th colspan="1">&nbsp;</th> </tr> </tfoot> </table>';
+            const txt = '<table id="tbl_list" class="table-striped table-hover table table" style="width: 100%;"> <thead> <tr> <th style="vertical-align: middle; text-align: center;" rowspan="3">No</th> <th style="vertical-align: middle; text-align: center;" rowspan="3">Nama</th> <th style="vertical-align: middle; text-align: center;" colspan="6">Atribut</th> <th style="vertical-align: middle; text-align: center;" rowspan="3">Aksi</th> </tr> <tr> <th style="vertical-align: middle; text-align: center;" rowspan="2">Status</th> <th style="vertical-align: middle; text-align: center;" colspan="2">Ukuran</th> <th style="vertical-align: middle; text-align: center;" rowspan="2">Posisi Kaca</th> <th style="vertical-align: middle; text-align: center;" rowspan="2">Warna</th> <th style="vertical-align: middle; text-align: center;" rowspan="2">Service</th> </tr> <tr> <th style="vertical-align: middle; text-align: center;">Lebar (cm)</th> <th style="vertical-align: middle; text-align: center;">Panjang&nbsp;(cm)</th> </tr> </thead> </table>';
             field_table.html(txt);
             return true;
         }
 
         async function loadData() {
-            var tbl_link = "{{ route('backend.master.wallet.getData.table') }}";
+            var tbl_link = "{{ route('backend.transaksi.penjualan.getData.table') }}";
 
             var ajaxOptions = {
                 url: tbl_link,
@@ -87,13 +87,23 @@
                         data: 'nama',
                     },
                     {
-                        data: 'is_default',
+                        data: 'is_attribute',
                     },
                     {
-                        data: 'nominal',
-                        render: DataTable.render.number( null, null, 2, 'Rp ' )
+                        data: 'ukur_lebar',
                     },
-
+                    {
+                        data: 'ukur_panjang',
+                    },
+                    {
+                        data: 'nm_posisi_kaca',
+                    },
+                    {
+                        data: 'nm_warna',
+                    },
+                    {
+                        data: 'nm_service',
+                    },
                     {
                         data: 'action',
                         orderable: false,
@@ -102,37 +112,11 @@
                 ],
                 columnDefs: [{
                     className: 'dt-center',
-                    targets: [0, 2, 4]
+                    targets: [0, 2, 8]
                 }],
                 order: [
                     [1, 'asc']
-                ],
-                "footerCallback": function(row, data, start, end, display) {
-                    var api = this.api(),
-                        data;
-
-                    // converting to interger to find total
-                    var intVal = function(i) {
-                        return typeof i === 'string' ?
-                            i.replace(/[\$,]/g, '') * 1 :
-                            typeof i === 'number' ?
-                            i : 0;
-                    };
-
-                    // computing column Total of the complete result
-
-                    var totalNominal = api
-                        .column(3)
-                        .data()
-                        .reduce(function(a, b) {
-                            return intVal(a) + intVal(b);
-                        }, 0);
-
-
-                    // Update footer by showing the total with the reference of the column index
-                    $(api.column(0).footer()).html('Total');
-                    $(api.column(3).footer()).html(numberToRupiah.format(totalNominal));
-                },
+                ]
             });
 
             return false;
@@ -183,36 +167,71 @@
 
     <script>
         document.addEventListener('livewire:initialized', () => {
+            var myModalEl = document.querySelector('#mdl_inventory')
+            var modal = bootstrap.Modal.getOrCreateInstance(myModalEl)
+
             // Listen to dispatch from server
             @this.on('showResult', (response) => {
                 popResult(table, response);
-                var myModalEl = document.querySelector('#mdl_wallet')
-                var modal = bootstrap.Modal.getOrCreateInstance(myModalEl)
                 modal.hide();
             });
 
             @this.on('refresh-data', (event) => {
-                //alert('product created/updated')
-                var myModalEl = document.querySelector('#mdl_wallet')
-                var modal = bootstrap.Modal.getOrCreateInstance(myModalEl)
-
                 // setTimeout(() => {
                 modal.hide();
                 // @this.dispatch('reset-modal');
                 // }, 5000);
             })
 
-            var mymodal = document.getElementById('mdl_wallet')
-            mymodal.addEventListener('hidden.bs.modal', (event) => {
-                @this.dispatch('reset-modal');
+            @this.on('edit-mode', (res) => {
+                // modal.show();
+
+                setTimeout(() => {
+                    $('#input_posisi_kaca').trigger('change');
+                    $('#input_warna').trigger('change');
+                    $('#input_service').trigger('change');
+                }, 500);
             })
+
+            myModalEl.addEventListener('shown.bs.modal', (event) => {
+                let is_checked = $('#is_attribute').is(':checked');
+                if (is_checked) {
+                    $('#field_attribute').prop('hidden', false);
+                } else {
+                    $('#field_attribute').prop('hidden', true);
+                }
+            });
+
+            myModalEl.addEventListener('hidden.bs.modal', (event) => {
+                @this.dispatch('reset-modal');
+                $('#field_attribute').prop('hidden', true);
+            });
 
         });
 
         document.addEventListener('livewire:navigated', () => {
             // console.log('livewire load code when navigated');
             // Listen to dispatch from server
+
+            var myModalEl = document.querySelector('#mdl_inventory')
+            var modal = bootstrap.Modal.getOrCreateInstance(myModalEl)
+
             Livewire.on('showResult', (response) => popResult(table, response));
+
+            Livewire.on('edit-mode', (res) => {
+                // modal.show();
+
+                setTimeout(() => {
+                    $('#input_posisi_kaca').trigger('change');
+                    $('#input_warna').trigger('change');
+                    $('#input_service').trigger('change');
+                }, 500);
+            })
+
+            myModalEl.addEventListener('hidden.bs.modal', (event) => {
+                @this.dispatch('reset-modal');
+                $('#field_attribute').prop('hidden', true);
+            });
         });
 
         document.addEventListener('livewire:navigating', () => {
