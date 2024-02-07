@@ -115,33 +115,37 @@
         .choices__inner {
             background-color: unset;
         }
+
+        .form-control:read-only {
+            background-color: #e9ecef;
+        }
     </style>
 @endsection
 
 @section('global.javascript.footer')
 
     {{-- <script data-navigate-once>
-        document.addEventListener('livewire:init', () => {
-            // Runs after Livewire is loaded but before it's initialized
-            // on the page...
-            console.log('livewire before init');
-            @yield('global.livewire.js.before.init')
-        });
+    document.addEventListener('livewire:init', () => {
+        // Runs after Livewire is loaded but before it's initialized
+        // on the page...
+        console.log('livewire before init');
+        @yield('global.livewire.js.before.init')
+    });
 
-        document.addEventListener('livewire:initialized', () => {
-            // Runs immediately after Livewire has finished initializing
-            // on the page...
-            console.log('livewire after init');
-            @yield('global.livewire.js.after.init')
-        });
+    document.addEventListener('livewire:initialized', () => {
+        // Runs immediately after Livewire has finished initializing
+        // on the page...
+        console.log('livewire after init');
+        @yield('global.livewire.js.after.init')
+    });
 
-        document.addEventListener('livewire:load', () => {
-            console.log('livewire load js code');
+    document.addEventListener('livewire:load', () => {
+        console.log('livewire load js code');
 
-            @yield('global.livewire.js.load.init')
+        @yield('global.livewire.js.load.init')
 
-        });
-    </script> --}}
+    });
+</script> --}}
 
     <script data-navigate-once>
         document.addEventListener('livewire:initialized', () => {
@@ -206,6 +210,28 @@
     </script>
 
     <script data-navigate-once>
+        function popResult(table, response) {
+            let res = response.result;
+
+            if (res.success) {
+                Swal.fire({
+                    title: 'Success',
+                    text: res.msg,
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                }).then((result) => {
+                    if (result.isConfirmed) {}
+                    table.ajax.reload();
+                });
+            } else {
+                Swal.fire({
+                    title: 'Error',
+                    text: res.msg,
+                    icon: 'error',
+                });
+            }
+        }
+
         function popResult2(response) {
             let res = response.result;
 

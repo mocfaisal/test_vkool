@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Models\table;
+namespace App\Models\Table;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class tr_mhs_forum_kelas extends Model
+class tr_penjualan_detail extends Model
 {
     use HasFactory;
-    protected $table = "tr_mhs_forum_kelas";
+    protected $table = "tr_penjualan_detail";
     protected $id = "id";
     // protected $fillable = ['*'];
     protected $guarded = ['id', 'created_at', 'updated_at'];

@@ -11,8 +11,8 @@
             </div>
             <div class="float-end">
                 <div class="buttons">
-                    <a class="btn icon icon-left btn-primary" data-bs-toggle="modal" data-bs-target="#mdl_inventory"><i
-                            class="bi bi-plus"></i> Add Data</a>
+                    <a class="btn icon icon-left btn-primary" href="{{ route('backend.transaksi.penjualan.create') }}"
+                        wire:navigate><i class="bi bi-plus"></i> Add Data</a>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
 
     </div>
 
-    <livewire:backend.transaksi.penjualan.create>
+    {{-- <livewire:backend.transaksi.penjualan.create> --}}
 
 </div>
 
@@ -55,7 +55,8 @@
         // Function Declare
         async function initTableElem() {
             const field_table = $('#field_table');
-            const txt = '<table id="tbl_list" class="table-striped table-hover table table" style="width: 100%;"> <thead> <tr> <th style="vertical-align: middle; text-align: center;" rowspan="3">No</th> <th style="vertical-align: middle; text-align: center;" rowspan="3">Nama</th> <th style="vertical-align: middle; text-align: center;" colspan="6">Atribut</th> <th style="vertical-align: middle; text-align: center;" rowspan="3">Aksi</th> </tr> <tr> <th style="vertical-align: middle; text-align: center;" rowspan="2">Status</th> <th style="vertical-align: middle; text-align: center;" colspan="2">Ukuran</th> <th style="vertical-align: middle; text-align: center;" rowspan="2">Posisi Kaca</th> <th style="vertical-align: middle; text-align: center;" rowspan="2">Warna</th> <th style="vertical-align: middle; text-align: center;" rowspan="2">Service</th> </tr> <tr> <th style="vertical-align: middle; text-align: center;">Lebar (cm)</th> <th style="vertical-align: middle; text-align: center;">Panjang&nbsp;(cm)</th> </tr> </thead> </table>';
+            const txt =
+                '<table id="tbl_list" class="table-striped table-hover table table" style="width: 100%;"> <thead> <tr> <th style="vertical-align: middle; text-align: center;">No</th> <th style="vertical-align: middle; text-align: center;">Tanggal Transaksi</th> <th style="vertical-align: middle; text-align: center;">Nama Transaksi</th> <th style="vertical-align: middle; text-align: center;">Nama Customer</th> <th style="vertical-align: middle; text-align: center;">Total Item</th> <th style="vertical-align: middle; text-align: center;">Aksi</th> </tr> </thead> </table>';
             field_table.html(txt);
             return true;
         }
@@ -84,25 +85,15 @@
                         searchable: false
                     },
                     {
-                        data: 'nama',
+                        data: 'tgl_transaksi',
+                    }, {
+                        data: 'nama_transaksi',
                     },
                     {
-                        data: 'is_attribute',
+                        data: 'nama_customer',
                     },
                     {
-                        data: 'ukur_lebar',
-                    },
-                    {
-                        data: 'ukur_panjang',
-                    },
-                    {
-                        data: 'nm_posisi_kaca',
-                    },
-                    {
-                        data: 'nm_warna',
-                    },
-                    {
-                        data: 'nm_service',
+                        data: 'total_item',
                     },
                     {
                         data: 'action',
@@ -112,10 +103,10 @@
                 ],
                 columnDefs: [{
                     className: 'dt-center',
-                    targets: [0, 2, 8]
+                    targets: [0, 1, 4, 5]
                 }],
                 order: [
-                    [1, 'asc']
+                    [1, 'desc']
                 ]
             });
 

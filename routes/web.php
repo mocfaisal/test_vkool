@@ -72,9 +72,10 @@ Route::group(['namespace' => 'App'], function () {
                         Route::prefix('penjualan')->group(function () {
                             Route::get('/', Index::class)->name('backend.transaksi.penjualan');
                             Route::get('/create', Create::class)->name('backend.transaksi.penjualan.create');
-                            // Route::get('/edit/{id}', Edit::class)->name('backend.transaksi.penjualan.edit');
+                            Route::get('/edit/{id_trx}', Create::class)->name('backend.transaksi.penjualan.edit');
 
                             Route::post('/table', 'Index@getData')->name('backend.transaksi.penjualan.getData.table');
+                            Route::post('/searchInv', 'Create@getListInventory')->name('backend.transaksi.penjualan.getData.Inv');
                         });
                     });
                 });
