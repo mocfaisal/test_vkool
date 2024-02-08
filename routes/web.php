@@ -23,7 +23,6 @@ Route::get('/', function () {
 
 Route::group(['namespace' => 'App'], function () {
 
-
     Route::group(['namespace' => 'Livewire'], function () {
 
         Route::group(['middleware' => ['auth', 'auth.basic'], 'namespace' => 'Backend'], function () {
@@ -80,6 +79,20 @@ Route::group(['namespace' => 'App'], function () {
                     });
                 });
             });
+
+            Route::group(['namespace' => 'Report'], function () {
+
+                Route::prefix('report')->group(function () {
+                    Route::get('/', Index::class)->name('backend.report.index');
+                });
+            });
+
+            Route::group(['namespace' => 'Simulation'], function () {
+
+                Route::prefix('simulation')->group(function () {
+                    Route::get('/', Index::class)->name('backend.simulation.index');
+                });
+            });
         });
 
         Route::group(['namespace' => 'Frontend'], function () {
@@ -115,6 +128,10 @@ Route::group(['namespace' => 'App'], function () {
 Route::get('/login', function () {
     return redirect()->route('frontend.auth.login');
 })->name('auth.login');
+
+Route::get('/home', function () {
+    return redirect()->route('backend.admin.home');
+})->name('home');
 
 Route::get('/logout', function () {
     return redirect()->route('frontend.auth.logout');

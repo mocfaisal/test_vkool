@@ -12,57 +12,7 @@
 
             <div class="navbar-collapse collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mb-lg-0 ms-auto">
-                    <li class="nav-item dropdown me-1">
-                        <a class="nav-link active dropdown-toggle text-gray-600" data-bs-toggle="dropdown"
-                            href="#" aria-expanded="false">
-                            <i class='bi bi-envelope bi-sub fs-4'></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                            <li>
-                                <h6 class="dropdown-header">Mail</h6>
-                            </li>
-                            <li><a class="dropdown-item" href="#">No new mail</a></li>
-                        </ul>
-                    </li>
 
-                    <li class="nav-item dropdown me-3">
-                        <a class="nav-link active dropdown-toggle text-gray-600" data-bs-toggle="dropdown"
-                            data-bs-display="static" href="#" aria-expanded="false">
-                            <i class='bi bi-bell bi-sub fs-4'></i>
-                            <span class="badge badge-notification bg-danger">7</span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end notification-dropdown"
-                            aria-labelledby="dropdownMenuButton">
-                            <li class="dropdown-header">
-                                <h6>Notifications</h6>
-                            </li>
-                            <li class="dropdown-item notification-item">
-                                <a class="d-flex align-items-center" href="#">
-                                    <div class="notification-icon bg-primary">
-                                        <i class="bi bi-cart-check"></i>
-                                    </div>
-                                    <div class="notification-text ms-4">
-                                        <p class="notification-title font-bold">Successfully check out</p>
-                                        <p class="notification-subtitle text-sm font-thin">Order ID #256</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="dropdown-item notification-item">
-                                <a class="d-flex align-items-center" href="#">
-                                    <div class="notification-icon bg-success">
-                                        <i class="bi bi-file-earmark-check"></i>
-                                    </div>
-                                    <div class="notification-text ms-4">
-                                        <p class="notification-title font-bold">Homework submitted</p>
-                                        <p class="notification-subtitle text-sm font-thin">Algebra math homework</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <p class="mb-0 py-2 text-center"><a href="#">See all notification</a></p>
-                            </li>
-                        </ul>
-                    </li>
                 </ul>
                 <div class="dropdown">
                     <a data-bs-toggle="dropdown" href="#" aria-expanded="false">
@@ -83,16 +33,10 @@
                         <li>
                             <h6 class="dropdown-header">Hello, {{ Session::get('user_fullname') }}!</h6>
                         </li>
-                        <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-person me-2"></i> My
-                                Profile</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-gear me-2"></i>
-                                Settings</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-wallet me-2"></i>
-                                Wallet</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
+                        <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="{{ route('auth.logout') }}" wire:navigate><i class="icon-mid bi bi-box-arrow-left me-2"></i>
+                        <li><a class="dropdown-item" href="{{ route('auth.logout') }}" wire:navigate><i
+                                    class="icon-mid bi bi-box-arrow-left me-2"></i>
                                 Logout</a></li>
                     </ul>
                 </div>
